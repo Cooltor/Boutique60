@@ -46,17 +46,48 @@ $err = '';
 
 
 if($_POST) {
-
-
-    if(strlen($_POST['pseudo']) <3 || strlen($_POST['pseudo']) > 20) {
+    
+    $pseudo = $_POST['pseudo'];
+    // Vérification de la longueur du pseudo
+    if(strlen($pseudo) <3 || strlen($pseudo) > 20) {
         $err .= '<div class="alert alert-danger">Le pseudo doit contenir entre 3 et 20 caractères</div>';
     }
+
+    // Vérification des caractères autorisés (regex)
+    
+    $monExpression = '#^[a-zA-Z0-9._-]+$#';
+    if(!preg_match($monExpression, $pseudo)) {
+        $err .= '<div class="alert alert-danger">Caractères autorisés : a-z A-Z 0-9 . _ -</div>';
+    }
+
+    // Vérification de la disponibilité du pseudo dans la BDD
+    $r = $pdo->query("SELECT * FROM membre WHERE pseudo = '$pseudo'");
+    if($r->rowCount() > 0) {
+        $err .= '<div class="alert alert-danger">Le pseudo est déjà pris </div>';
+    }
+
+
+    // Insérer l'user ds la bdd
+    if(empty($err)) {
+        $pdo->query("INSERT INTO membre (pseudo,mdp,nom,prenom,email,civilite,ville, code_postal,adresse) VALUES ('$_POST[pseudo]', '$_POST[mdp]', '$_POST[nom]', '$_POST[prenom]', '$_POST[email]', '$_POST[civilite]', '$_POST[ville]', '$_POST[cp]', '$_POST[adresse]')");
+    }
+
+
+
+
+
+
+
+
+
+    $content .= $err;
+
 }
 
-$content .= $err;
 
 
 ?>
+
 
 <!-- PARTIE AFFICHAGE -->
 
@@ -66,11 +97,11 @@ $content .= $err;
 <?php echo $content; ?>
 
 <form  action="" method="POST" class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
+<div class="container py-5 h-100">
     <div class="row justify-content-center align-items-center h-100">
-      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="col-12 col-lg-9 col-xl-7">
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-          <div class="card-body p-4 p-md-5">
+            <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Inscription</h3>
             <form>
 
@@ -78,16 +109,16 @@ $content .= $err;
                 <div class="col-md-6 mb-4">
 
                 <div class="form-outline">
-                    <input type="text" id="firstName" class="form-control form-control-lg" name="firstname/>
-                    <label class="form-label" for="firstName">Nom</label>
+                    <input type="text" id="firstName" class="form-control form-control-lg" name="nom"/>
+                    <label class="form-label" for="nom">Nom</label>
                 </div>
 
                 </div>
                 <div class="col-md-6 mb-4">
 
                 <div class="form-outline">
-                    <input type="text" id="lastName" class="form-control form-control-lg" name="lastname" />
-                    <label class="form-label" for="lastName">Prénom</label>
+                    <input type="text" id="lastName" class="form-control form-control-lg" name="prenom" />
+                    <label class="form-label" for="prenom">Prénom</label>
                 </div>
                 </div>
             </div>
@@ -120,22 +151,12 @@ $content .= $err;
                 <h6 class="mb-2 pb-1">Genre</h6>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                    value="option1" checked />
-                    <label class="form-check-label" for="femaleGender">Femme</label>
+                <input type="radio" name="civilite" id="civilite" value="m" checked>
+                Homme
+                <input type="radio" name="civilite" id="civilite" value="f" checked>
+                Femme
                 </div>
 
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                    value="option2" />
-                    <label class="form-check-label" for="maleGender">Homme</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                    value="option3" />
-                    <label class="form-check-label" for="otherGender">Autres</label>
-                </div>
 
                 </div>
             </div>
@@ -149,53 +170,43 @@ $content .= $err;
                 </div>
 
                 </div>
-                <div class="col-md-6 mb-4 pb-2">
-
-                  <div class="form-outline">
-                    <input type="tel" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" />
-                    <label class="form-label" for="phoneNumber">Téléphone</label>
-                  </div>
-
+                
                 </div>
-              </div>
 
-              <div class="row">
+                <div class="row">
                 <div class="col-md-6 mb-4 pb-2">
 
-                  <div class="form-outline">
-                    <input type="text" id="address" class="form-control form-control-lg" name="adress />
-                    <label class="form-label" for="address">Adresse</label>
-                  </div>
+                <div class="form-outline">
+                    <input type="text" id="addresse" class="form-control form-control-lg" name="adresse" />
+                    <label class="form-label" for="addresse">Adresse</label>
+                </div>
 
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
 
-                  <div class="form-outline">
-                    <input type="text" id="town" class="form-control form-control-lg" name="town" />
+                <div class="form-outline">
+                    <input type="text" id="town" class="form-control form-control-lg" name="ville" />
                     <label class="form-label" for="town">Ville</label>
-                  </div>
+                </div>
 
-                  <div class="form-outline">
-                  <input type="text" class="form-control" id="cp" name="cp">
-                  <label for="cp" class="form-label">Code Postal</label>
-
-                  </div>
+                <div class="form-outline">
+                    <input type="text" class="form-control" id="cp" name="cp">
+                    <label for="cp" class="form-label">Code Postal</label>
+                </div>
 
                 </div>
-              </div>
+                </div>
 
-              
-
-              <div class="mt-4 pt-2">
+            <div class="mt-4 pt-2">
                 <input class="btn btn-primary btn-lg" type="submit" value="Valider" />
-              </div>
+            </div>
 
             </form>
-          </div>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
+    </div>
+</div>
 </form>
 
 <?php require_once './inc/footer.inc.php'; ?>
