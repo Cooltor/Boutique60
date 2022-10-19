@@ -29,7 +29,7 @@
             <a class="nav-link" href="../Boutique60/profil.php">Profil</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Panier</a>
+            <a class="nav-link" href="../Boutique60/index.php">Gestion des produits</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="../Boutique60/connexion.php">Déconnexion</a>

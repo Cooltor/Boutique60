@@ -5,42 +5,60 @@
 
 require_once './inc/init.php';
 
+if(!userConnected())
+{
+    header('location:connexion.php');
+}
 
+if(userIsAdmin())
+{
+    $content .='<div class="alert alert-secondary" role="alert">
+        Bonjour Le Boss !
+        </div>';
+}
 
-$req = $pdo->query('SELECT * FROM membre WHERE pseudo = "$_POST[pseudo]"');
-$user = $req->fetch(PDO::FETCH_ASSOC);
+$resultat = $pdo->query('SELECT * FROM membre WHERE pseudo = "$pseudo"');
+$membre = $resultat->fetch(PDO::FETCH_ASSOC);
 $profil = '';
 
-$_SESSION["newsession"]=$user;
 
-$profil .= "<div>" . 'Votre pseudo : ' . ($user['pseudo']) . "</div>" . 
-                        "<div>" . 'Votre nom : ' . ($user['nom']) . "</div>" .
-                        "<div>" . 'Votre prénom : ' . ($user['prenom']) . "</div>" .
-                        "<div>" . 'Votre email : ' . ($user['email']) . "</div>" .
-                        "<div>" . 'Votre civilité : ' . ($user['civilite']) . "</div>" .
-                        "<div>" . 'Votre ville : ' . ($user['ville']) . "</div>" .
-                        "<div>" . 'Votre code postal : ' . ($user['code_postal']) . "</div>" .
-                        "<div>" . 'Votre adresse : ' . ($user['adresse']) . "</div>" ;
+
+$profil .= '<div class="text-center">' . 'Votre pseudo : ' . $_SESSION['membre']['pseudo'] . "</div>" . 
+                        '<div class="text-center">' . 'Votre nom : ' . $_SESSION['membre']['nom'] . "</div>" .
+                        '<div class="text-center">' . 'Votre prénom : ' .  $_SESSION['membre']['prenom'] . "</div>" .
+                        '<div class="text-center">' . 'Votre email : ' . $_SESSION['membre']['email']  . "</div>" .
+                        '<div class="text-center">' . 'Votre civilité : ' . $_SESSION['membre']['civilite'] . "</div>" .
+                        '<div class="text-center">' . 'Votre ville : ' . $_SESSION['membre']['ville'] . "</div>" .
+                        '<div class="text-center">' . 'Votre code postal : ' .$_SESSION['membre']['code_postal'] . "</div>" .
+                        '<div class="text-center">' . 'Votre adresse : ' . $_SESSION['membre']['adresse'] . "</div>" ;
 
                         $content .= $profil;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if(userIsAdmin())
+{
+    require_once './inc/header3.inc.php';
+} else {
+    require_once './inc/header2.inc.php'; 
+};
+
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php require_once './inc/header2.inc.php'; ?>
-
 
 <h1 class="text-center">PROFIL</h1>
 

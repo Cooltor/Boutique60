@@ -14,22 +14,32 @@ if($_POST){
     $pseudo = $_POST['pseudo'];
     $mdp = $_POST['mdp'];
 
-    $resultat = $pdo->prepare("SELECT * FROM membre WHERE pseudo = :pseudo");
-    $resultat->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
-    $resultat->execute();
+    $resultat = $pdo->query("SELECT * FROM membre WHERE pseudo = '$pseudo'");
+    
 
     if($resultat->rowCount() > 0){
         $membre = $resultat->fetch(PDO::FETCH_ASSOC);
         if(password_verify($mdp, $membre['mdp'])){
-            $_SESSION['membre'] = $membre;
+            $_SESSION['membre']['id_membre'] = $membre['id_membre'];
+            $_SESSION['membre']['pseudo'] = $membre['pseudo'];
+            $_SESSION['membre']['nom'] = $membre['nom'];
+            $_SESSION['membre']['prenom'] = $membre['prenom'];
+            $_SESSION['membre']['email'] = $membre['email'];
+            $_SESSION['membre']['civilite'] = $membre['civilite'];
+            $_SESSION['membre']['ville'] = $membre['ville'];
+            $_SESSION['membre']['code_postal'] = $membre['code_postal'];
+            $_SESSION['membre']['adresse'] = $membre['adresse'];
+            $_SESSION['membre']['statut'] = $membre['statut'];
+
             header('location:profil.php');
+
         }
         else{
-            $err .= '<div class="alert alert-danger">Erreur sur le pseudo ou le mot de passe</div>';
+            $err .= '<div class="alert alert-danger">Erreur sur le pseudo ou sur le mot de passe</div>';
         }
     }
     else{
-        $err .= '<div class="alert alert-danger">Erreur sur le pseudo ou le mot de passe</div>';
+        $err .= '<div class="alert alert-danger">Erreur sur le pseudo ou sur le mot de passe</div>';
     }
 }
 
@@ -74,7 +84,7 @@ $content .= $err;
                 </div>
             </div>
             <div class="mt-4 pt-2">
-                <input class="btn btn-primary btn-lg" type="submit" value="Valider" />
+                <input class="btn btn-primary btn-lg" type="submit" value="Se connecter" />
             </div>
             </form>
         </div>

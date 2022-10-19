@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 
 // 1 - Connexion à la BDD
@@ -12,11 +13,12 @@ $pdo = new PDO(
     )
 );
 
-
+require_once './inc/functions.php';
 
 // 2 - Déclarer une variable qui va afficher les messages
 
 $content = '';
+
 
 
 ?>
