@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+?>
+
+
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,13 +35,13 @@
             <a class="nav-link" href="#">Boutique</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="../Boutique60/inscription.php">Inscription</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="../Boutique60/connexion.php">Connexion</a>
+            <a class="nav-link" href="../Boutique60/profil.php">Profil</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Panier</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../Boutique60/connexion.php">Déconnexion</a>
         </li>
         </ul>
 

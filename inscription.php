@@ -1,54 +1,30 @@
 <!-- PARTIE TRAITEMENT -->
 
+
 <?php
 
-// Etape 1
-// en utilisant strlenn() pour vérifier la taille du pseudo (entre 3 et 20 caractères)
-// en utilisant la fonction preg_match() pour vérifier si le pseudo contient les caractères autorisés
-// '#^[a-zA-Z0-9._-]+$#' : expression régulière
-// Vérifier si le pseudo est disponible dans la BDD
 
-
-// Etape 2
-// En utilisant la fc password_hash(), crypter le mdp de l'user dans la bdd
 
 require_once './inc/init.php';
 
 $err = '';
 
-//if (isset($_POST['submit'])) {
-//
-//    if (!empty($_POST['pseudo'])) {
-//        if (strlen($_POST['pseudo']) >= 3 && strlen($_POST['pseudo']) <= 20) {
-//            if (preg_match('#^[a-zA-Z0-9._-]+$#', $_POST['pseudo'])) {
-//                $pseudo = $_POST['pseudo'];
-//            } else {
-//               echo $err .= '<div class="alert alert-danger">Caractères autorisés : a-z A-Z 0-9 . _ -</div>';
-//            }
-//       } else {
-//          echo  $err .= '<div class="alert alert-danger">Le pseudo doit contenir entre 3 et 20 caractères</div>';
-//        }
-//    } else {
-//      echo  $err .= '<div class="alert alert-danger">Le pseudo est obligatoire</div>';
-//    }
-//
-//    if (!empty($_POST['mdp'])) {
-//        if (strlen($_POST['mdp']) >= 4 && strlen($_POST['mdp']) <= 20) {
-//            $mdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
-//        } else {
-//            echo $err .= '<div class="alert alert-danger">Le mot de passe doit contenir entre 4 et 20 caractères</div>';
-//        }
-//    } else {
-//        echo $err .= '<div class="alert alert-danger">Le mot de passe est obligatoire</div>';
-//    }
-//
-//}
+
 
 
 if($_POST) {
-    
     $pseudo = $_POST['pseudo'];
+    $mdp = $_POST['mdp'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+
+    foreach($_POST as $keys => $valeur) {
+        $_POST[$keys] = htmlspecialchars(addslashes($valeur));
+    }
+    // PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO
     // Vérification de la longueur du pseudo
+   
     if(strlen($pseudo) <3 || strlen($pseudo) > 20) {
         $err .= '<div class="alert alert-danger">Le pseudo doit contenir entre 3 et 20 caractères</div>';
     }
@@ -65,20 +41,24 @@ if($_POST) {
     if($r->rowCount() > 0) {
         $err .= '<div class="alert alert-danger">Le pseudo est déjà pris </div>';
     }
+    
+    // MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP MDP
+
+    
+    
+    // Vérification de la longueur du mdp
+    if(strlen($mdp) <3 || strlen($mdp) > 20) {
+        $err .= '<div class="alert alert-danger">Le mot de passe doit contenir entre 3 et 20 caractères</div>';
+    }
+    $mdp = password_hash($mdp, PASSWORD_DEFAULT);
+    
 
 
     // Insérer l'user ds la bdd
     if(empty($err)) {
-        $pdo->query("INSERT INTO membre (pseudo,mdp,nom,prenom,email,civilite,ville, code_postal,adresse) VALUES ('$_POST[pseudo]', '$_POST[mdp]', '$_POST[nom]', '$_POST[prenom]', '$_POST[email]', '$_POST[civilite]', '$_POST[ville]', '$_POST[cp]', '$_POST[adresse]')");
+        $pdo->query("INSERT INTO membre (pseudo,mdp,nom,prenom,email,civilite,ville, code_postal,adresse) VALUES ('$_POST[pseudo]', '$mdp', '$_POST[nom]', '$_POST[prenom]', '$_POST[email]', '$_POST[civilite]', '$_POST[ville]', '$_POST[cp]', '$_POST[adresse]')");
+        $content .= '<div class="alert alert-success">Vous êtes inscrit</div>';
     }
-
-
-
-
-
-
-
-
 
     $content .= $err;
 
