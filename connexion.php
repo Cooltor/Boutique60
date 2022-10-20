@@ -8,7 +8,10 @@
 // Si c'est le cas, on connecte le membre
 require_once './inc/init.php';
 $err = '';
-
+if(isset($_GET['action']) && $_GET['action'] == 'deconnexion'){
+    session_destroy();
+    header('location:index.php');
+}
 
 if($_POST){
     $pseudo = $_POST['pseudo'];

@@ -1,4 +1,4 @@
-<?php require_once './inc/header3.inc.php'; ?>
+<?php require_once './inc/header.inc.php'; ?>
 
 <h1 class="text-center">Projet boutique</h1> 
 

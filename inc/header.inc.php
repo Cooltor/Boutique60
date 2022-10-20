@@ -1,3 +1,6 @@
+<?php require_once './inc/init.php'; ?>
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,17 +25,42 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav me-auto">
         <li class="nav-item">
-            <a class="nav-link" href="../Boutique60/boutique.php">Boutique</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="../Boutique60/inscription.php">Inscription</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="../Boutique60/connexion.php">Connexion</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Panier</a>
-        </li>
+            <a class="nav-link" href="<?= URL?>./index.php">Accueil
+            </a>
+            </li>
+
+            <?php if (userIsAdmin()) : ?>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>admin/index.php">Dashboard</a>
+              </li>
+            <?php endif ?>
+
+            <?php if (userConnected()) : ?>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>panier.php">Panier</a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>profil.php">Profil</a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>connexion.php?action=deconnexion">Déconnexion</a>
+              </li>
+            <?php else : ?>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>inscription.php">Inscription</a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>connexion.php">Connexion</a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
+              </li>
+
+            <?php endif ?>
+
         </ul>
 
     </div>

@@ -51,12 +51,8 @@ $profil .= '<div class="text-center">' . 'Votre pseudo : ' . $_SESSION['membre']
 
 
 
-if(userIsAdmin())
-{
-    require_once './inc/header3.inc.php';
-} else {
-    require_once './inc/header2.inc.php'; 
-};
+
+    require_once './inc/header.inc.php';
 
 ?>
 

@@ -19,7 +19,7 @@ require_once './inc/functions.php';
 
 $content = '';
 
-
+define('URL', 'http://localhost/boutique60/');
 
 ?>
 
