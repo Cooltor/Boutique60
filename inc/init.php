@@ -13,7 +13,7 @@ $pdo = new PDO(
     )
 );
 
-require_once './inc/functions.php';
+require_once 'functions.php';
 
 // 2 - Déclarer une variable qui va afficher les messages
 
