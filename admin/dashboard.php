@@ -3,7 +3,12 @@
 
 <h1 class="text-center">Dashboard</h1> 
 
-
+<?php
+if(!userIsAdmin()){
+    header('location:../connexion.php');
+    exit();
+}
+?>
 <?php require_once '../inc/footer.inc.php'; ?>
 
 

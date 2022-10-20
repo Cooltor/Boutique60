@@ -1,11 +1,11 @@
 <?php require_once '../inc/header.inc.php'; 
 
 
-$_FILES['photo']['name'] = 'photo.jpg';
-$_FILES['photo']['type'] = 'image/jpeg';
-$_FILES['photo']['size'] = 1000000;
-$_FILES['photo']['tmp_name'] = 'C:\Users\Utilisateur\Downloads\photo.jpg';
-$_FILES['photo']['error'] = 0;
+
+if(!userIsAdmin()){
+    header('location:../connexion.php');
+    exit();
+}
 
 
 
