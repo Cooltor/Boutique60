@@ -11,6 +11,19 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
     crossorigin="anonymous">
     <link rel="stylesheet" href="../Boutique60/style.css">
+    <style>
+      
+      .articles{
+        display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: space-around;
+        gap : 1rem;
+        
+      }
+    </style>
 
     <title>Boutique60</title>
 </head>

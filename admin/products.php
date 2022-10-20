@@ -15,7 +15,11 @@ if($_POST){
     if (!empty($_POST['photo'])) {
         
         $pdo->query("INSERT INTO produit(reference, categorie, titre, description, couleur, taille, public, photo, prix,stock) VALUES('$_POST[reference]','$_POST[categorie]','$_POST[titre]','$_POST[description]','$_POST[couleur]','$_POST[taille]','$_POST[public]','$_POST[photo]','$_POST[prix]','$_POST[stock]')");
-
+        
+        if(!empty($_FILES['photo']['name'])){
+            
+        }
+        else
     }
     else {
 
@@ -79,14 +83,29 @@ if($_POST){
             <div class="row">
                 <div class="col-md-6 mb-4">
                 <div class="form-outline">
-                    <input type="text" class="form-control" id="couleur" name="couleur">
+                    <select type="form-select" class="form-control" id="couleur" name="couleur">
+                        <option value="">Rouge</option>
+                        <option value="">Bleu</option>
+                        <option value="">Vert</option>
+                        <option value="">Noir</option>
+                        <option value="">Blanc</option>
+                        <option value="">Quadricolor</option>
+                    </select>
+
                     <label for="couleur" class="form-label">Couleur</label>
                 </div>
 
                 </div>
                 <div class="col-md-6 mb-4">
                 <div class="form-outline">
-                    <input type="text" class="form-control" id="taille" name="taille">
+                    <select type="form-select" class="form-control" id="taille" name="taille">
+                        <option value="">XS</option>
+                        <option value="">S</option>
+                        <option value="">M</option>
+                        <option value="">L</option>
+                        <option value="">XL</option>
+                        <option value="">XXL</option>
+                        </select>
                     <label for="taille" class="form-label">Taille</label>
                 </div>
                 
