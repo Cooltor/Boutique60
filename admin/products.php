@@ -8,7 +8,38 @@ if(!userIsAdmin()){
 }
 
 
-
+if($_POST)
+{
+    foreach($_POST as $key => $value)
+    {
+        $_POST[$key] = htmlspecialchars(addslashes($value));
+    }
+    if(!empty($_POST['photo']))
+    {
+        $nom_img = time() . '_' . $_POST['reference'] . '_' . $_POST['photo']['name'];
+        $img_doc = RACINE . "photo/$nom_img";
+        $img_bdd = URL . "photo/$nom_img";
+    
+        if($_FILES['photo']['size'] <= 8000000)
+        {
+            $data = pathinfo($_FILES['photo']['name']);
+            $img_ext = $data['extension'];
+            $tab = ['jpg', 'png', 'jpeg', 'gif', 'JPG', 'PNG', 'JPEG', 'GIF', 'Jpg', 'Png', 'Jpeg', 'Gif'];
+            if(in_array($tab, $img_ext))
+            {
+                move_uploaded_file($_FILES['photo']['tmp_name'], $img_doc)
+            } else {
+                $content .='<div class="alert alert-danger" role="alert">
+                Format non autorisé 
+                </div>';
+            } 
+        }else {
+            $content .='<div class="alert alert-danger" role="alert">
+            Vérifier la taille de votre image
+            </div>';
+        }
+    } else {
+}
 
 if($_POST){
     
