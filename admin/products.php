@@ -7,7 +7,6 @@ if(!userIsAdmin()){
     exit();
 }
 
-
 if($_POST)
 {
     foreach($_POST as $key => $value)
@@ -19,7 +18,7 @@ if($_POST)
         $nom_img = time() . '_' . $_POST['reference'] . '_' . $_POST['photo']['name'];
         $img_doc = RACINE . "photo/$nom_img";
         $img_bdd = URL . "photo/$nom_img";
-    
+
         if($_FILES['photo']['size'] <= 8000000)
         {
             $data = pathinfo($_FILES['photo']['name']);
@@ -27,38 +26,36 @@ if($_POST)
             $tab = ['jpg', 'png', 'jpeg', 'gif', 'JPG', 'PNG', 'JPEG', 'GIF', 'Jpg', 'Png', 'Jpeg', 'Gif'];
             if(in_array($tab, $img_ext))
             {
-                move_uploaded_file($_FILES['photo']['tmp_name'], $img_doc)
+                move_uploaded_file($_FILES['photo']['tmp_name'], $img_doc);
             } else {
                 $content .='<div class="alert alert-danger" role="alert">
                 Format non autorisé 
                 </div>';
-            } 
-        }else {
+           } 
+        } else {
             $content .='<div class="alert alert-danger" role="alert">
             Vérifier la taille de votre image
             </div>';
         }
-    } else {
+    }
 }
+
+
 
 if($_POST){
-    
-    if (!empty($_POST['photo'])) {
-        
-        $pdo->query("INSERT INTO produit(reference, categorie, titre, description, couleur, taille, public, photo, prix,stock) VALUES('$_POST[reference]','$_POST[categorie]','$_POST[titre]','$_POST[description]','$_POST[couleur]','$_POST[taille]','$_POST[public]','$_POST[photo]','$_POST[prix]','$_POST[stock]')");
-        
-        if(!empty($_FILES['photo']['name'])){
-            
-        }
-        else
-    }
-    else {
+    if(empty($_POST['photo'])){
+        $defaultImage = URL . './img/default.jpg';
+        $pdo->query("INSERT INTO produit(reference, categorie, titre, description, couleur, taille, public, photo, prix,stock) VALUES('$_POST[reference]','$_POST[categorie]','$_POST[titre]','$_POST[description]','$_POST[couleur]','$_POST[taille]','$_POST[public]','$defaultImage','$_POST[prix]','$_POST[stock]')");
+    } else {
+        $updateImage = URL . $_POST['photo'];
+        $pdo->query("INSERT INTO produit(reference, categorie, titre, description, couleur, taille, public, photo, prix,stock) VALUES('$_POST[reference]','$_POST[categorie]','$_POST[titre]','$_POST[description]','$_POST[couleur]','$_POST[taille]','$_POST[public]','$updateImage','$_POST[prix]','$_POST[stock]')");
 
-        $photoDefaut = '../photo/tshirt.jpg'; 
-        $pdo->query("INSERT INTO produit(reference, categorie, titre, description, couleur, taille, public, photo, prix,stock) VALUES('$_POST[reference]','$_POST[categorie]','$_POST[titre]','$_POST[description]','$_POST[couleur]','$_POST[taille]','$_POST[public]','$photoDefaut','$_POST[prix]','$_POST[stock]')");
 
-    }
-}
+
+    $content .='<div class="alert alert-success" role="alert">
+    Le produit a bien été enregistré :)
+    </div>';
+}};
 
 ?>
 <?php require_once '../inc/footer.inc.php'; ?>
