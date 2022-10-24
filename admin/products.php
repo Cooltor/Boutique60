@@ -130,9 +130,15 @@ $vuTable = '</table>';
                 <div class="col-md-6 mb-4">
 
                 <div class="form-outline">
-                    <input type="text" id="categorie" class="form-control form-control-lg" name="categorie" />
-                    <label class="form-label" for="categorie">Catégorie</label>
-                </div>
+                    <select type="form-select" class="form-control" id="categorie" name="categorie">
+                        <option >Polo et T-shirt</option>
+                        <option >Pantalons</option>
+                        <option >Chaussures</option>
+                        <option >Accessoires</option>
+                        <option >Robes et jupes</option>
+                    </select>
+
+                    <label for="categorie" class="form-label">Catégories</label>
                 </div>
             </div>
 
