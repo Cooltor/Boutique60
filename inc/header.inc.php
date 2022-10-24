@@ -38,7 +38,7 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav me-auto">
         <li class="nav-item">
-            <a class="nav-link" href="<?= URL?>./index.php">Accueil
+            <a class="nav-link" href="<?= URL?>./index.php">Boutique
             </a>
             </li>
 
