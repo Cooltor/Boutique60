@@ -20,6 +20,7 @@ require_once 'functions.php';
 $content = '';
 
 define('URL', 'http://localhost/boutique60/');
+define('RACINE', $_SERVER['DOCUMENT_ROOT']. '/boutique60/');
 
 ?>
 

@@ -15,11 +15,11 @@
       
       .articles{
         display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	align-content: space-around;
+	      flex-direction: row;
+	      flex-wrap: wrap;
+	      justify-content: center;
+	      align-items: center;
+	      align-content: space-around;
         gap : 1rem;
         
       }

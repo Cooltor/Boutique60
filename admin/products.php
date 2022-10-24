@@ -8,60 +8,105 @@ if(!userIsAdmin()){
 }
 
 if($_POST)
-{
+{   
+    
     foreach($_POST as $key => $value)
     {
         $_POST[$key] = htmlspecialchars(addslashes($value));
     }
-    if(!empty($_POST['photo']))
+    if(!empty($_FILES['photo']))
     {
-        $nom_img = time() . '_' . $_POST['reference'] . '_' . $_POST['photo']['name'];
+        $nom_img = time() . '' . $POST['reference'] . '' . $_FILES['photo']['name'];
+        
         $img_doc = RACINE . "photo/$nom_img";
         $img_bdd = URL . "photo/$nom_img";
 
         if($_FILES['photo']['size'] <= 8000000)
         {
-            $data = pathinfo($_FILES['photo']['name']);
-            $img_ext = $data['extension'];
+            $data = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+            
+
             $tab = ['jpg', 'png', 'jpeg', 'gif', 'JPG', 'PNG', 'JPEG', 'GIF', 'Jpg', 'Png', 'Jpeg', 'Gif'];
-            if(in_array($tab, $img_ext))
+
+            if(in_array($data, $tab))
             {
                 move_uploaded_file($_FILES['photo']['tmp_name'], $img_doc);
             } else {
                 $content .='<div class="alert alert-danger" role="alert">
                 Format non autorisé 
                 </div>';
-           } 
+            } 
         } else {
             $content .='<div class="alert alert-danger" role="alert">
             Vérifier la taille de votre image
             </div>';
         }
+        $rep= $pdo->query("INSERT INTO produit (reference, categorie, titre, description, couleur, taille, public, photo, prix, stock) VALUES ('$_POST[reference]', '$_POST[categorie]', '$_POST[titre]', '$_POST[description]', '$_POST[couleur]', '$_POST[taille]', '$_POST[public]', '$img_bdd', '$_POST[prix]', '$_POST[stock]')");
+
     }
+    
+    $rep= $pdo->query("INSERT INTO produit (reference, categorie, titre, description, couleur, taille, public, photo, prix, stock) VALUES ('$_POST[reference]', '$_POST[categorie]', '$_POST[titre]', '$_POST[description]', '$_POST[couleur]', '$_POST[taille]', '$_POST[public]', '$img_bdd', '$_POST[prix]', '$_POST[stock]')");
 }
 
 
 
-if($_POST){
-    if(empty($_POST['photo'])){
-        $defaultImage = URL . './img/default.jpg';
-        $pdo->query("INSERT INTO produit(reference, categorie, titre, description, couleur, taille, public, photo, prix,stock) VALUES('$_POST[reference]','$_POST[categorie]','$_POST[titre]','$_POST[description]','$_POST[couleur]','$_POST[taille]','$_POST[public]','$defaultImage','$_POST[prix]','$_POST[stock]')");
-    } else {
-        $updateImage = URL . $_POST['photo'];
-        $pdo->query("INSERT INTO produit(reference, categorie, titre, description, couleur, taille, public, photo, prix,stock) VALUES('$_POST[reference]','$_POST[categorie]','$_POST[titre]','$_POST[description]','$_POST[couleur]','$_POST[taille]','$_POST[public]','$updateImage','$_POST[prix]','$_POST[stock]')");
-
-
-
-    $content .='<div class="alert alert-success" role="alert">
-    Le produit a bien été enregistré :)
+if(isset($_GET['action']) && $_GET['action'] == 'supprimer')
+{
+    $pdo->query("DELETE FROM produit WHERE id_produit = '$_GET[id_produit]'");
+    header ('location:products.php');
+    $content .= '<div class="alert alert-success" role="alert">
+    Le produit a bien été supprimé
     </div>';
-}};
+}
+
+
+
+
+
+
+
+$res = $pdo->query("SELECT * FROM produit");
+
+echo "<table  border=\'2\'><tr>";
+
+for($i = 0; $i < $res->columnCount(); $i++)
+{
+    $colonne = $res->getColumnMeta($i);
+    echo "<th>".$colonne['name']."</th>";
+}
+
+echo "<th>Modifier</th>";
+echo "<th>Supprimer</th>";
+echo '</tr>';
+
+while($ligne = $res->fetch(PDO::FETCH_ASSOC))
+{
+    echo '<tr>';
+        foreach($ligne as $key=>$info) {
+            if($key == 'photo')
+            {
+                echo "<td><img src='$info' width='100px'></td>";
+            } else {
+                echo "<td>$info</td>";
+            }
+        }
+    echo '<td><a href="?action=modifier&id_produit='.$ligne['id_produit'].'">Modifier<i class="fas fa-edit"></i></a></td>';
+    echo '<td><a href="?action=supprimer&id_produit='.$ligne['id_produit'].'">Supprimer<i class="fas fa-trash-alt"></i></a></td>';
+
+}
+
+$vuTable = '</table>';
 
 ?>
 <?php require_once '../inc/footer.inc.php'; ?>
 
 
-<h1 class="text-center">Gestion des produits</h1> 
+
+<?php echo $vuTable; ?></div>
+    </div>
+</div>
+
+
 
 <form  action="" method="POST" enctype="multipart/form-data" class="vh-100 gradient-custom">
 <div class="container py-5 h-100">
@@ -112,12 +157,12 @@ if($_POST){
                 <div class="col-md-6 mb-4">
                 <div class="form-outline">
                     <select type="form-select" class="form-control" id="couleur" name="couleur">
-                        <option value="">Rouge</option>
-                        <option value="">Bleu</option>
-                        <option value="">Vert</option>
-                        <option value="">Noir</option>
-                        <option value="">Blanc</option>
-                        <option value="">Quadricolor</option>
+                        <option >Rouge</option>
+                        <option >Bleu</option>
+                        <option >Vert</option>
+                        <option >Noir</option>
+                        <option >Blanc</option>
+                        <option >Quadricolor</option>
                     </select>
 
                     <label for="couleur" class="form-label">Couleur</label>
@@ -127,12 +172,12 @@ if($_POST){
                 <div class="col-md-6 mb-4">
                 <div class="form-outline">
                     <select type="form-select" class="form-control" id="taille" name="taille">
-                        <option value="">XS</option>
-                        <option value="">S</option>
-                        <option value="">M</option>
-                        <option value="">L</option>
-                        <option value="">XL</option>
-                        <option value="">XXL</option>
+                        <option >XS</option>
+                        <option >S</option>
+                        <option >M</option>
+                        <option >L</option>
+                        <option >XL</option>
+                        <option >XXL</option>
                         </select>
                     <label for="taille" class="form-label">Taille</label>
                 </div>

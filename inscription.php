@@ -24,7 +24,7 @@ if($_POST) {
     }
     // PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO PSEUDO
     // Vérification de la longueur du pseudo
-   
+
     if(strlen($pseudo) <3 || strlen($pseudo) > 20) {
         $err .= '<div class="alert alert-danger">Le pseudo doit contenir entre 3 et 20 caractères</div>';
     }
@@ -46,7 +46,7 @@ if($_POST) {
 
     
     
-    // Vérification de la longueur du mdp
+    // Vérification de la longueur du mot de passe
     if(strlen($mdp) <3 || strlen($mdp) > 20) {
         $err .= '<div class="alert alert-danger">Le mot de passe doit contenir entre 3 et 20 caractères</div>';
     }
@@ -54,7 +54,7 @@ if($_POST) {
     
 
 
-    // Insérer l'user ds la bdd
+    // Insérer l'user dans la base de donnée
     if(empty($err)) {
         $pdo->query("INSERT INTO membre (pseudo,mdp,nom,prenom,email,civilite,ville, code_postal,adresse) VALUES ('$_POST[pseudo]', '$mdp', '$_POST[nom]', '$_POST[prenom]', '$_POST[email]', '$_POST[civilite]', '$_POST[ville]', '$_POST[cp]', '$_POST[adresse]')");
         $content .= '<div class="alert alert-success">Vous êtes inscrit</div>';
