@@ -20,6 +20,27 @@ if(isset($_POST['ajout_panier'])) {
    
 }
 
+if (isset($_POST['payer'])) {
+    for ($i = 0; $u < count($_SESSION['panier']['id_produit']); $i++) {
+        $req = $pdo->query("SELECT * FROM produit WHERE id_produit = '". $_SESSION['panier']['id_produit'][$i]."'");
+
+        $data = $req->fetch(PDO::FETCH_ASSOC);
+
+        if($data['stock'] < $_SESSION['panier']['quantite'][$i]) {
+            
+            if($data['stock'] > 0) {
+                $_SESSION['panier']['quantite'][$i] = $data['stock'];
+                $msg .= '<div class="alert alert-danger">Le produit '. $data['titre'] .' n\'est plus en stock en entier, la quantité a été modifiée.</div>';
+            } else {
+                retirerProduit($_SESSION['panier']['id_produit'][$i]);
+                $msg .= '<div class="alert alert-danger">Le produit '. $data['titre'] .' n\'est plus en stock, il a été retiré du panier.</div>';
+            }
+        }
+    }
+}
+
+
+
 $content.= '<div class="container text-center">';
 $content.= '<table class="table table-hover">';
 $content.= '<thread><tr><th scope="col">id produit</th><th scope="col">Quantité</th><th scope="col">Prix</th></tr></thread>';
@@ -43,7 +64,7 @@ if(empty($_SESSION['panier']['id_produit'])) {
         $content .= '<form action="" method="POST">';
         $content .= '<tr><td colspan="3"><input type="submit" name="payer" value="Valider le panier" class="btn btn-success btn-lg"></td></tr>';
         $content .= '</form>';
-
+    
     }
 }
 
