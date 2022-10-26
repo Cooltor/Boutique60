@@ -34,6 +34,17 @@ if(empty($_SESSION['panier']['id_produit'])) {
         $content.= '<td>' . $_SESSION['panier']['prix'][$i] . '</td>';
         $content.= '</tr>';
     }
+
+    $content.= '<tr><td colspan="3">Montant total : ' . montantTotal() . '</td></tr>';
+
+    if(!userConnected()){
+        $content .= '<div class="alert alert-light" role="alert">Veuillez vous connecter ou vous inscrire </div>';
+    }else{
+        $content .= '<form action="" method="POST">';
+        $content .= '<tr><td colspan="3"><input type="submit" name="payer" value="Valider le panier" class="btn btn-success btn-lg"></td></tr>';
+        $content .= '</form>';
+
+    }
 }
 
 
