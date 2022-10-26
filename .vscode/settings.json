@@ -2,8 +2,7 @@
     "spellright.documentTypes": [
         "markdown",
         "latex",
-        "plaintext",
-        "php"
+        "plaintext"
     ],
     "spellright.language": [
         "fr"

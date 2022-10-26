@@ -10,7 +10,8 @@
     rel="stylesheet" 
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
     crossorigin="anonymous">
-    <link rel="stylesheet" href="../Boutique60/style.css">
+
+    
     <style>
       
       .articles{
@@ -50,9 +51,6 @@
 
             <?php if (userConnected()) : ?>
               <li class="nav-item">
-              <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
-              </li>
-              <li class="nav-item">
               <a class="nav-link" href="<?= URL ?>panier.php">Panier</a>
               </li>
               <li class="nav-item">
@@ -68,9 +66,7 @@
               <li class="nav-item">
               <a class="nav-link" href="<?= URL ?>connexion.php">Connexion</a>
               </li>
-              <li class="nav-item">
-              <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
-              </li>
+
 
             <?php endif ?>
 
