@@ -20,25 +20,44 @@ if(isset($_POST['ajout_panier'])) {
    
 }
 
-if (isset($_POST['payer'])) {
-    for ($i = 0; $u < count($_SESSION['panier']['id_produit']); $i++) {
-        $req = $pdo->query("SELECT * FROM produit WHERE id_produit = '". $_SESSION['panier']['id_produit'][$i]."'");
+if(isset($_POST['payer'])){
+    for($i=0; $i < count($_SESSION['panier']['id_produit']);$i++){
+        // je fais une requête pour récupérer les datas des produits qui sont dans ma session
+        $r = $pdo->query("SELECT * FROM produit WHERE id_produit = '".$_SESSION['panier']['id_produit'][$i]."' ");
 
-        $data = $req->fetch(PDO::FETCH_ASSOC);
+        $data = $r->fetch(PDO::FETCH_ASSOC);
 
-        if($data['stock'] < $_SESSION['panier']['quantite'][$i]) {
-            
-            if($data['stock'] > 0) {
+        // var_dump($data['stock']);
+
+        // Si la quantité est inférieure à ce que j'ai en stock, alors on aura 2 cas possible :
+        if($data['stock'] < $_SESSION['panier']['quantite'][$i]){
+
+            if($data['stock']>0){// Si la quantité disponible est supérieure à 0 mais inférieure à ce que l'user demande
+
                 $_SESSION['panier']['quantite'][$i] = $data['stock'];
-                $msg .= '<div class="alert alert-danger">Le produit '. $data['titre'] .' n\'est plus en stock en entier, la quantité a été modifiée.</div>';
-            } else {
+
+            }else{// Sinon le produit n'est plus disponible
+
+                $content = "Le produit demandé n'est plus en stock";
                 retirerProduit($_SESSION['panier']['id_produit'][$i]);
-                $msg .= '<div class="alert alert-danger">Le produit '. $data['titre'] .' n\'est plus en stock, il a été retiré du panier.</div>';
+
+                $i--;// Je refais un tour de panier afin de m'assurer que tout est ok avant la validation
             }
+
+            // je déclare une variable s'il y'a un problème sur le stock
+            $error = true;
         }
     }
-}
 
+    // S'il n'y a pas de problème sur le stock
+    if(!isset($error)){
+
+        $pdo->query("INSERT INTO commande(id_membre, montant, date_enregistrement, etat) VALUES ('".$_SESSION['membre']['id_membre']."','".montantTotal()."', NOW(), 'en cours de traitement' ) ");
+
+    }
+
+
+}
 
 
 $content.= '<div class="container text-center">';
