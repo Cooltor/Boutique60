@@ -54,6 +54,14 @@ if(isset($_POST['payer'])){
 
         $pdo->query("INSERT INTO commande(id_membre, montant, date_enregistrement, etat) VALUES ('".$_SESSION['membre']['id_membre']."','".montantTotal()."', NOW(), 'en cours de traitement' ) ");
 
+        for($i=0; $i < count($_SESSION['panier']['id_produit']);$i++){
+
+            $pdo->query("INSERT INTO details_commande(id_commande, id_produit, quantite, prix) VALUES ('".$pdo->lastInsertId()."','".$_SESSION['panier']['id_produit'][$i]."','".$_SESSION['panier']['quantite'][$i]."','".$_SESSION['panier']['prix'][$i]."' ) ");
+
+            $pdo->query("UPDATE produit SET stock = stock - '".$_SESSION['panier']['quantite'][$i]."' WHERE id_produit = '".$_SESSION['panier']['id_produit'][$i]."' ");
+        }
+
+
     }
 
 
