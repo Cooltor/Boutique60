@@ -23,7 +23,7 @@ if(!userIsAdmin()){
         <ul class="list-group">
             <li class="list-group-item m-2 border"><a href="products.php">Gestion des produits</a></li>
             <li class="list-group-item m-2 border"><a href="">Gestion des commandes</a></li>
-            <li class="list-group-item m-2 border"><a href="">Gestion des membres</a></li>
+            <li class="list-group-item m-2 border"><a href="gestion_membre.php">Gestion des membres</a></li>
         </ul>
         </div>
     </div>
