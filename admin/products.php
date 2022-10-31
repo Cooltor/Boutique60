@@ -98,7 +98,7 @@ while($ligne = $res->fetch(PDO::FETCH_ASSOC))
 $vuTable = '</table>';
 
 ?>
-<?php require_once '../inc/footer.inc.php'; ?>
+
 
 <h1 class="text-center"> Gestion des stocks</h1>
 
@@ -249,3 +249,4 @@ $vuTable = '</table>';
     </div>
 </div>
 </form>
+<?php require_once '../inc/footer.inc.php'; ?>
