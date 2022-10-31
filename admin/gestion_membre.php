@@ -17,7 +17,7 @@ if(!userIsAdmin()){
 
 $res = $pdo->query("SELECT * FROM membre");
 
-echo "<table  border=\'2\'><tr>";
+echo '<table class=" table table-striped" border=\'2\'><tr>';
 
 if(isset($_GET['action']) && $_GET['action'] == 'supprimer')
 {

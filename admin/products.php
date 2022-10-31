@@ -67,7 +67,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'supprimer')
 
 $res = $pdo->query("SELECT * FROM produit");
 
-echo "<table  border=\'2\'><tr>";
+echo '<table class=" table table-striped" border=\'2\'><tr>';
 
 for($i = 0; $i < $res->columnCount(); $i++)
 {
