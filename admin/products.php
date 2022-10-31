@@ -100,7 +100,7 @@ $vuTable = '</table>';
 ?>
 <?php require_once '../inc/footer.inc.php'; ?>
 
-
+<h1 class="text-center"> Gestion des stocks</h1>
 
 <?php echo $vuTable; ?></div>
     </div>

@@ -67,7 +67,7 @@ $vuTable = '</table>';
 
 
 ?>
-
+<h1 class="text-center"> Listes des membres</h1>
 
 <?php echo $vuTable; 
     echo $content; ?>
